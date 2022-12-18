@@ -10,6 +10,24 @@
 - 프로필 수정
 
 ## 폴더 상세설명
+```bash 
+src
+ ┣ components
+ ┃ ┣ App.js
+ ┃ ┣ AuthForm.js
+ ┃ ┣ Navigation.js
+ ┃ ┣ Nweet.js
+ ┃ ┣ NweetFactory.js
+ ┃ ┗ Router.js
+ ┣ routes
+ ┃ ┣ Auth.js
+ ┃ ┣ Home.js
+ ┃ ┗ Profile.js
+ ┣ fBase.js
+ ┣ index.css
+ ┣ index.js
+ ┗ styles.css
+```
 
 ## 사용한 도구 및 라이브러리
 - react, firebase

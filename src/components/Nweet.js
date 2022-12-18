@@ -4,6 +4,8 @@ import db from "../fBase";
 import { storagaService } from "../fBase";
 import { ref } from "firebase/storage";
 import { deleteObject } from "firebase/storage";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faTrash, faPencilAlt } from "@fortawesome/free-solid-svg-icons";
 
 const Nweet = ({ nweetObj, isOwner }) => {
   const [editing, setEditing] = useState(false);
@@ -13,7 +15,7 @@ const Nweet = ({ nweetObj, isOwner }) => {
     const ok = window.confirm("Are you sure you want to delete this nweet?");
     if (ok) {
       await deleteDoc(doc(db, "nweets", nweetObj.id));
-      await deleteObject(ref(storagaService, nweetObj.attachmentUrl))
+      await deleteObject(ref(storagaService, nweetObj.attachmentUrl));
     }
   };
 
@@ -34,39 +36,53 @@ const Nweet = ({ nweetObj, isOwner }) => {
   };
 
   console.log(nweetObj);
-  
+
   return (
-    <>
+    <div className="nweet">
       {editing ? (
         <>
-          <form onSubmit={onSubmit}>
+          <form onSubmit={onSubmit} className="container nweetEdit">
             <input
               type="text"
               placeholder="Edit your nweet"
               value={newNweet}
               onChange={onChange}
+              autoFocus
+              required
+              className="formInput"
             />
-            <input type="submit" value="Update Nweet" />
+            <input type="submit" value="Update Nweet" className="formBtn" />
           </form>
-          <button onClick={toggleEditing}>Cancel</button>
+          <span onClick={toggleEditing} className="formBtn cancelBtn">
+            Cancel
+          </span>{" "}
         </>
       ) : (
-        <div>
+        <>
           <div key={nweetObj.id}>
             <h4>{nweetObj.text}</h4>
             {nweetObj.attachmentUrl && (
-              <img src={nweetObj.attachmentUrl} width="50px" height="50px" alt="" />
+              <img
+                src={nweetObj.attachmentUrl}
+                width="50px"
+                height="50px"
+                alt=""
+              />
             )}
             {isOwner && (
-              <>
-                <button onClick={onDeleteClick}>Delete Nweet</button>
-                <button onClick={toggleEditing}>Edit Nweet</button>
-              </>
+              <div className="nweet__actions">
+              <span onClick={onDeleteClick}>
+                <FontAwesomeIcon icon={faTrash} />
+              </span>
+              <span onClick={toggleEditing}>
+                <FontAwesomeIcon icon={faPencilAlt} />
+              </span>
+            </div>
             )}
           </div>
-        </div>
+        </>
       )}
-    </>
+    </div>
   );
 };
 
